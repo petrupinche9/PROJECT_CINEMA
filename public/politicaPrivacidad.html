@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>Politica de Privacidad Cines EVAM</title>
+</head>
+
+<body>
+    <div id="app">
+        <v-app id="vapp">
+
+            <v-app-bar extended color="#6A76AB" dark shrink-on-scroll prominent src="cine.jpg" fade-img-on-scroll
+                scroll-target="#scrolling-techniques-4">
+                <template v-slot:img="{ props }">
+                    <v-img v-bind="props" gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
+                </template>
+
+                <v-spacer>
+                    <img
+                   src="./logo.png" onclick="location.href='index.html'">
+                </v-spacer>
+
+                <v-toolbar-title align-center>Política de Privacidad</v-toolbar-title align-center>
+
+                <v-spacer> </v-spacer>
+                <v-spacer> </v-spacer>
+
+            </v-app-bar>
+
+            <v-content absolute>
+                <v-container fixed fluid fill-height style="background: rgba(0, 0, 0, 0.7);color:white">
+                    <v-flex xs12>
+                        <v-row>
+                            <v-col sm="9">
+                                De conformidad con lo dispuesto en la Ley Orgánica 15/1999, de 13 de diciembre, de Protección de Datos
+                                de Carácter Personal, Cine EVAM le informa que los datos personales que se recogen serán
+                                incorporados a un fichero de datos propiedad de Proyecciones Ideal SCA y serán tratados con una
+                                finalidad administrativa y, si procede, remitir información comercial sobre productos o servicios y no
+                                habrá ningún otro tipo de tratamiento que no sea para esta finalidad descrita. Los datos incorporados a
+                                este fichero serán, exactos y actuales.                                
+                            </v-col>
+                            <v-col sm="9">
+                                www.evam.es emplea cookies cuando un usuario accede a formularios de pedidos. Estas cookies asocian
+                                únicamente un usuario anónimo y su equipo para el proceso de información, sin proporcionar ningún tipo
+                                de referencia del que se pueda derivar dato de carácter personal alguno. En caso de que haya una
+                                utilización de cookies del que se pueda derivar algún dato de carácter personal, el usuario será
+                                informado convenientemente de acuerdo con la Ley Orgánica 15/1999, de 13 de diciembre, de Protección de
+                                Datos de Carácter Personal.
+                            </v-col>
+                            <v-col sm="9">
+                                En su caso, si no desea que esos datos sean tratados, puede enviar una correo electrónico a
+                                info@cineideal.es señalando tal situación con una copia de su DNI.
+                            </v-col>
+                            <v-col sm="9">
+                                En los supuestos en los que Cine EVAM prevea ceder sus datos personales a terceros, obtendrá previamente
+                                el consentimiento inequívoco de los usuarios para efectuar dichas cesiones informándole en los
+                                correspondientes formularios electrónicos de inscripción u otro mecanismo análogo o similar de la
+                                finalidad o finalidades a que se destinarán los datos objeto de cesión, así como de la identidad y tipo
+                                de actividad del cesionario.
+                            </v-col>
+                        </v-row>
+                    </v-flex>
+                </v-container>
+            </v-content>
+
+            <v-footer color="#6A76AB" app> 
+                <v-btn color="red lighten-2" dark onclick="location.href='index.html'">
+                    Volver a Inicio
+                  </v-btn>
+            </v-footer>
+
+        </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data: () => ({
+                drawer: false,
+            })
+        })
+    </script>
+
+</body>
+
+</html>

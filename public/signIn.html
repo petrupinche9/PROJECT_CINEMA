@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="icon.png" />
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <title>Registro Cines EVAM</title>
+</head>
+
+<body>
+  <div id="app">
+    <span class="bg"></span>
+    <v-app id="inspire">
+      <v-app-bar color="#6A76AB" fixed dark>
+        <v-toolbar-title>
+          <img
+                   src="./logo.png" onclick="location.href='index.html'">
+        </v-toolbar-title>
+      </v-app-bar>
+      <v-content>
+        <v-container fluid fill-height>
+          <v-layout align-center justify-center>
+            <v-flex xs12 sm8 md4>
+              <v-card class="elevation-12">
+                <v-toolbar color="#6A76AB">
+                  <v-toolbar-title>Introduzca sus datos</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                  <v-form ref="form" v-model="valid" lazy-validation>
+                    <v-text-field v-model="name" :rules="nameRules" :counter="15" label="Nombre" required>
+                    </v-text-field>
+
+                    <v-text-field v-model="surname" :rules="nameRules" :counter="30" label="Apellidos" required>
+                    </v-text-field>
+
+                    <v-text-field v-model="email" :rules="emailRules" label="Correo" required></v-text-field>
+
+                    <v-text-field v-model="passw" :counter="10" :rules="passRules" label="Contraseña" type="password"
+                      required></v-text-field>
+
+                    <v-checkbox v-model="checkbox" color="green" :rules="[v => !!v || 'Obligatorio para registrarse!']"
+                      label="He leído y acepto las Condiciones de Privacidad" required></v-checkbox>
+
+                    <v-btn v-show="name&&surname&&email&&passw&&checkbox" :disabled="!valid" color="success" @click="validate" href="indexSesionIniciada.html">
+                      Registrarme
+                    </v-btn>
+                  </v-form>
+
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-content>
+      <v-footer color="#6A76AB" app>
+        <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" width="500">
+            <template v-slot:activator="{ on }">
+              <v-btn color="red lighten-2" dark v-on="on">
+                Política de privacidad
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title class="headline grey lighten-2" primary-title>
+                Política de privacidad
+              </v-card-title>
+              <v-card-text>
+                De conformidad con lo dispuesto en la Ley Orgánica 15/1999, de 13 de diciembre, de Protección de Datos
+                de Carácter Personal, Cine EVAM le informa que los datos personales que se recogen serán
+                incorporados a un fichero de datos propiedad de Proyecciones Ideal SCA y serán tratados con una
+                finalidad administrativa y, si procede, remitir información comercial sobre productos o servicios y no
+                habrá ningún otro tipo de tratamiento que no sea para esta finalidad descrita. Los datos incorporados a
+                este fichero serán, exactos y actuales.
+
+                www.evam.es emplea cookies cuando un usuario accede a formularios de pedidos. Estas cookies asocian
+                únicamente un usuario anónimo y su equipo para el proceso de información, sin proporcionar ningún tipo
+                de referencia del que se pueda derivar dato de carácter personal alguno. En caso de que haya una
+                utilización de cookies del que se pueda derivar algún dato de carácter personal, el usuario será
+                informado convenientemente de acuerdo con la Ley Orgánica 15/1999, de 13 de diciembre, de Protección de
+                Datos de Carácter Personal.
+
+                En su caso, si no desea que esos datos sean tratados, puede enviar una correo electrónico a
+                info@cineideal.es señalando tal situación con una copia de su DNI.
+
+                En los supuestos en los que Cine EVAM prevea ceder sus datos personales a terceros, obtendrá previamente
+                el consentimiento inequívoco de los usuarios para efectuar dichas cesiones informándole en los
+                correspondientes formularios electrónicos de inscripción u otro mecanismo análogo o similar de la
+                finalidad o finalidades a que se destinarán los datos objeto de cesión, así como de la identidad y tipo
+                de actividad del cesionario.
+              </v-card-text>
+              <v-divider></v-divider>
+            </v-card>
+          </v-dialog>
+      
+        <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" width="500">
+            <template v-slot:activator="{ on }">
+              <v-btn color="red lighten-2" dark v-on="on">
+                Condiciones del servicio
+              </v-btn>
+
+            </template>
+
+            <v-card>
+              <v-card-title class="headline grey lighten-2" primary-title>
+                Condiciones del servicio
+              </v-card-title>
+              <v-card-text>
+                Debes seguir las políticas disponibles a través de los Servicios.
+
+                No debes usar nuestros Servicios de forma inadecuada. Por ejemplo, no debes interferir con dichos
+                Servicios ni intentar acceder a ellos usando un método distinto a la interfaz y a las instrucciones
+                proporcionadas por Google. Solo podrás usar los Servicios en la medida en que la ley lo permita,
+                incluidas las leyes y las normativas de control de las exportaciones y de las reexportaciones que estén
+                en vigor. Podemos suspender o cancelar nuestros Servicios si no cumples con nuestras políticas o
+                condiciones o si consideramos que tu conducta puede ser malintencionada.
+
+                El uso de nuestros Servicios no te convierte en titular de ninguno de los derechos de propiedad
+                intelectual de los mismos ni del contenido al que accedas. Solo podrás usar el contenido de nuestros
+                Servicios si te autoriza su titular o si está permitido por la ley. Estas condiciones no te otorgan el
+                derecho a usar las marcas ni los logotipos utilizados en nuestros Servicios. No elimines, ocultes ni
+                alteres los avisos legales que se muestren en nuestros Servicios.
+              </v-card-text>
+              <v-divider></v-divider>
+            </v-card>
+          </v-dialog>
+          <v-spacer></v-spacer>
+        <span class="white--text">&copy; 2019</span>
+
+      </v-footer>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      props: {
+        source: String,
+      },
+      data: () => ({
+        drawer: null,
+        return: {
+          dialog: false,
+        },
+        valid: false,
+        name: '',
+        surname: '',
+        passw: '',
+        nameRules: [
+          v => !!v || 'Campo obligatorio',
+          v => (v && v.length <= 10) || 'Campo obligatorio',
+        ],
+        passRules: [
+          v => !!v || 'Campo obligatorio',
+          v => (v && v.length <= 10) || 'Debe tener menos de 10 caracteres',
+        ],
+        email: '',
+        emailRules: [
+          v => !!v || 'Correo obligatorio',
+          v => /.+@.+\..+/.test(v) || 'El correo debe ser válido [ej: ejemplo@dominio.com]',
+        ],
+        checkbox: false,
+      }),
+      created() {
+        this.$vuetify.theme.dark = true
+      },
+      methods: {
+        validate() {
+          if (this.$refs.form.validate()) {
+            this.snackbar = true
+          }
+        },
+      },
+    })
+  </script>
+
+
+</body>
+
+</html>

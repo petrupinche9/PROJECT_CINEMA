@@ -1,0 +1,501 @@
+<!--Para ejecutar:
+  Primera forma:
+	npm init
+	npm install --save body-parser express vuetify
+	node app.js //archivo q creo manualmente y escucha para escribir en chrome: localhost:3000
+
+  Segunda forma:
+	En C:\xampp\htdocs meter carpeta con index.html que queramos
+	Pulsar Start Apache en Xampp (aplicacion)
+  Escribir en el navegador "localost/nombreCarperta"-->
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>Teatro Cines EVAM</title>
+</head>
+
+<body>
+    <div id="app">
+        <v-app id="vapp">
+            <v-card class="seccion">
+                <v-app-bar color="#6A76AB" dark>
+                    <v-spacer>
+                        <img
+                   src="./logo.png" onclick="location.href='index.html'">
+                    </v-spacer>
+                    <h2>TEATRO</h2>
+
+                    <v-spacer></v-spacer>
+
+                    <template>
+                        <v-btn icon dark @click="dialog = !dialog">
+                            <v-icon dark>mdi-account-circle</v-icon>
+                        </v-btn>
+                    </template>
+
+                    <v-dialog v-model="dialog" max-width="500px">
+                        <v-card class="elevation-12">
+                            <v-toolbar color="#6A76AB">
+                                <v-toolbar-title>Introduzca sus datos de acceso</v-toolbar-title>
+                            </v-toolbar>
+                            <v-card-text>
+                                <v-form ref="form" v-model="valid" lazy-validation action="teatroSesionIniciada.html">
+                                    <v-text-field v-model="email" :rules="emailRules" label="Correo" required>
+                                    </v-text-field>
+
+                                    <v-text-field v-model="contras" :counter="10" :rules="nameRules" label="Contraseña"
+                                        required></v-text-field>
+
+                                    <v-dialog v-model="windowPassword" max-width="600px">
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn color="#6A76AB" dark v-on="on">No recuerdo mis datos</v-btn>
+                                            <v-btn color="#00BB2D" onclick="location.href='signIn.html'">Registrarse
+                                            </v-btn>
+                                        </template>
+                                        <v-card>
+                                            <v-card-title>
+                                                <span class="headline">Recuperación de contraseña</span>
+                                            </v-card-title>
+                                            <v-card-text>
+                                                <v-container>
+                                                    <v-row>
+                                                        </v-col>
+                                                        <v-col cols="12">
+                                                            <v-text-field v-model="recuperacionField"
+                                                                :rules="emailRules" label="Correo" required>
+                                                            </v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-container>
+                                                <small>*campo obligatorio</small>
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn color="#6A76AB" v-show="recuperacionField" :disabled="!valid"
+                                                    @click="validate"
+                                                    onclick="alert('Nueva cotraseña enviada a su correo, revíselo'); location.href='index.html'"
+                                                    @click="windowPassword = false">Enviar</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+
+                                    <v-btn v-show="contras&&email" :disabled="!valid" color="success" class="mr-4"
+                                        @click="validate" type="submit">
+                                        Entrar
+                                    </v-btn>
+                                </v-form>
+                            </v-card-text>
+                        </v-card>
+                    </v-dialog>
+
+                    <v-dialog v-model="dialog1" fullscreen hide-overlay transition="dialog-bottom-transition">
+                        <template v-slot:activator="{ on }">
+                            <v-btn icon dark @click="dialog1 = !dialog1">
+                                <v-icon dark>mdi-phone</v-icon>
+                            </v-btn>
+                        </template>
+                        <v-card class="elevation-12">
+                            <v-toolbar color="#6A76AB">
+                                <v-btn icon dark @click="dialog1 = false">
+                                    <v-icon>mdi-close</v-icon>
+                                </v-btn>
+                                <v-toolbar-title>Contacta con nosotros</v-toolbar-title>
+                                <v-spacer></v-spacer>
+                            </v-toolbar>
+                            <v-card-text>
+                                <v-form ref="form" v-model="valid" lazy-validation>
+                                    <v-col cols="12" sm="6">
+                                        <v-text-field v-model="name" label="Nombre y apellidos" required>
+                                        </v-text-field>
+                                        <v-text-field v-model="email" :rules="emailRules" label="Correo electrónico"
+                                            required>
+                                        </v-text-field>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-text-field v-model="msj" label="Mensaje" required> </v-text-field>
+                                    </v-col>
+
+                                    <v-btn v-show="name&&email&&msj" :disabled="!valid" color="success"
+                                        @click="validate"
+                                        onclick="alert('¡Mensaje enviado! Gracias por contactar con nosotros. En breve recibirá respuesta.'); location.href='teatroNoLogueada.html'">
+                                        Enviar Mensaje
+                                    </v-btn>
+                                </v-form>
+                            </v-card-text>
+                        </v-card>
+                    </v-dialog>
+                </v-app-bar>
+
+                <v-btn v-scroll="onScroll" v-show="fab" fab dark fixed bottom right color="#6A76AB" @click="toTop">
+                    <v-icon>keyboard_arrow_up</v-icon>
+                </v-btn>
+
+                <v-container>
+                    <v-row align="center" justify="center">
+                        <v-col cols="4">
+                            <v-btn color="#6A76AB" onclick="location.href='index.html'">INICIO</v-btn>
+                            <v-btn color="#6A76AB" onclick="location.href='carteleraNoLogueada.html'">PELICULAS</v-btn>
+                            <v-btn color="#6A76AB" onclick="location.href='conciertosNoLogueada.html'">CONCIERTOS
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    <v-layout wrap align-center justify-center>
+
+                        <v-row>
+                            <v-col v-for="(item, i) in play" :key="i" cols="4">
+                                <v-card max-width="100%" class="white mx-auto">
+                                    <v-img :src="item.src" max-width="400"></v-img>
+                                    <v-card-title class="headline black--text" v-text="item.title"
+                                        style="word-break: break-all"></v-card-title>
+                                    <v-card-text>
+                                        <v-row align="center" class="mx-0">
+                                            <v-rating :value="item.rating" color="amber" dense half-increments readonly
+                                                size="14">
+                                            </v-rating>
+                                            <div class="grey--text ml-4">{{ item.rating }}</div>
+                                        </v-row>
+                                        <p class="subtitle-1 black--text">Género: {{ item.genre }}</p>
+                                        <p class="subtitle-1 black--text">Duración: {{ item.duracion }}</p>
+                                        <!--   <div class="my-4 subtitle-1 black--text" v-text="item.genre"></div>
+                                            <div class="my-4 subtitle-1 black--text" v-text="item.duracion"></div>
+                                            <div class="black--text" v-text="item.resumen"></div> -->
+                                        <v-card-actions>
+                                            <div class="my-2">
+                                                <v-expansion-panels multiple light>
+                                                    <v-expansion-panel>
+                                                        <v-expansion-panel-header>Más
+                                                            Información</v-expansion-panel-header>
+                                                        <v-expansion-panel-content>
+                                                            <p class="subtitle-1"><small>{{ item.resumen }}</small></p>
+                                                            <p class="subtitle-1"><small><b>Reparto:
+                                                                    </b>{{ item.cast }}</small></p>
+                                                            <p class="subtitle-1"><small><b>Director:
+                                                                    </b>{{ item.director }}</small></p>
+                                                        </v-expansion-panel-content>
+                                                    </v-expansion-panel>
+                                                    <v-expansion-panel>
+                                                        <v-expansion-panel-header>Horarios</v-expansion-panel-header>
+                                                        <v-expansion-panel-content>
+                                                            <div>
+                                                                <v-card-text>
+                                                                    <v-btn small dark color="#6A76AB"
+                                                                    @click="dialog = !dialog">
+                                                                        {{ item.horario }}
+                                                                    </v-btn>
+                                                                </v-card-text>
+                                                            </div>
+                                                        </v-expansion-panel-content>
+                                                    </v-expansion-panel>
+                                                </v-expansion-panels>
+                                            </div>
+                                        </v-card-actions>
+                                    </v-card-text>
+                                </v-card>
+                            </v-col>
+                        </v-row>
+
+
+                        <v-footer color="#6A76AB" app>
+
+                            <v-spacer></v-spacer>
+                            <v-dialog v-model="dialog3" fullscreen hide-overlay transition="dialog-bottom-transition">
+                                <template v-slot:activator="{ on }">
+                                    <a @click="dialog3 = !dialog3" style="color: rgb(236, 241, 235, 0.993)">Política de
+                                        Privacidad</a>
+                                </template>
+                                <v-app-bar extended color="#6A76AB" dark shrink-on-scroll prominent src="cine.jpg"
+                                    fade-img-on-scroll scroll-target="#scrolling-techniques-4">
+                                    <template v-slot:img="{ props }">
+                                        <v-img v-bind="props"
+                                            gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
+                                    </template>
+
+
+                                    <v-btn icon dark @click="dialog3 = false">
+                                        <v-icon>mdi-close</v-icon>
+                                    </v-btn>
+                                    <h2>Cines EVAM León</h2>
+
+
+                                    <v-toolbar-title align-center>Política de Privacidad</v-toolbar-title align-center>
+
+                                    <v-spacer> </v-spacer>
+                                    <v-spacer> </v-spacer>
+
+                                </v-app-bar>
+
+                                <v-content absolute>
+                                    <v-container fixed fluid fill-height
+                                        style="background: rgba(0, 0, 0, 0.7);color:white">
+                                        <v-flex xs12>
+                                            <v-row>
+                                                <v-col sm="9">
+                                                    De conformidad con lo dispuesto en la Ley Orgánica 15/1999, de 13 de
+                                                    diciembre, de Protección de Datos
+                                                    de Carácter Personal, Cine EVAM le informa que los datos personales
+                                                    que se recogen serán
+                                                    incorporados a un fichero de datos propiedad de Proyecciones Ideal
+                                                    SCA y serán tratados con una
+                                                    finalidad administrativa y, si procede, remitir información
+                                                    comercial sobre productos o servicios y no
+                                                    habrá ningún otro tipo de tratamiento que no sea para esta finalidad
+                                                    descrita. Los datos incorporados a
+                                                    este fichero serán, exactos y actuales.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    www.evam.es emplea cookies cuando un usuario accede a formularios de
+                                                    pedidos. Estas cookies asocian
+                                                    únicamente un usuario anónimo y su equipo para el proceso de
+                                                    información, sin proporcionar ningún tipo
+                                                    de referencia del que se pueda derivar dato de carácter personal
+                                                    alguno. En caso de que haya una
+                                                    utilización de cookies del que se pueda derivar algún dato de
+                                                    carácter personal, el usuario será
+                                                    informado convenientemente de acuerdo con la Ley Orgánica 15/1999,
+                                                    de 13 de diciembre, de Protección de
+                                                    Datos de Carácter Personal.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    En su caso, si no desea que esos datos sean tratados, puede enviar
+                                                    una correo electrónico a
+                                                    info@cineideal.es señalando tal situación con una copia de su DNI.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    En los supuestos en los que Cine EVAM prevea ceder sus datos
+                                                    personales a terceros, obtendrá previamente
+                                                    el consentimiento inequívoco de los usuarios para efectuar dichas
+                                                    cesiones informándole en los
+                                                    correspondientes formularios electrónicos de inscripción u otro
+                                                    mecanismo análogo o similar de la
+                                                    finalidad o finalidades a que se destinarán los datos objeto de
+                                                    cesión, así como de la identidad y tipo
+                                                    de actividad del cesionario.
+                                                </v-col>
+                                            </v-row>
+                                        </v-flex>
+                                    </v-container>
+                                </v-content>
+                            </v-dialog>
+
+                            <v-spacer></v-spacer>
+
+                            <v-dialog v-model="dialog2" fullscreen hide-overlay transition="dialog-bottom-transition">
+                                <template v-slot:activator="{ on }">
+                                    <a @click="dialog2 = !dialog2" style="color: rgb(236, 241, 235, 0.993)">Condiciones
+                                        de servicio</a>
+                                </template>
+                                <v-app-bar extended color="#6A76AB" dark shrink-on-scroll prominent src="cine.jpg"
+                                    fade-img-on-scroll scroll-target="#scrolling-techniques-4">
+                                    <template v-slot:img="{ props }">
+                                        <v-img v-bind="props"
+                                            gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"></v-img>
+                                    </template>
+
+
+                                    <v-btn icon dark @click="dialog2 = false">
+                                        <v-icon>mdi-close</v-icon>
+                                    </v-btn>
+                                    <h2>Cines EVAM León</h2>
+                                    <v-toolbar-title align-center>Condiciones del Servicio</v-toolbar-title
+                                        align-center>
+
+                                    <v-spacer> </v-spacer>
+                                    <v-spacer> </v-spacer>
+                                </v-app-bar>
+                                <v-content absolute>
+                                    <v-container fixed fluid fill-height
+                                        style="background: rgba(0, 0, 0, 0.7);color:white">
+                                        <v-flex xs12>
+                                            <v-row>
+                                                <v-col sm="9">
+                                                    Debes respetar y seguir las políticas a través de los Servicios.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    No debes usar nuestros Servicios de forma inadecuada. Por ejemplo,
+                                                    no debes interferir
+                                                    con
+                                                    dichos Servicios ni intentar acceder a ellos usando un método
+                                                    distinto a la interfaz y a
+                                                    las
+                                                    instrucciones proporcionadas por Google.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    Solo podrás usar los Servicios en la medida en que la ley lo
+                                                    permita, incluidas las
+                                                    leyes y las normativas de control de las exportaciones y de las
+                                                    reexportaciones que estén en vigor.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    Podemos suspender o cancelar nuestros Servicios si no cumples con
+                                                    nuestras políticas o
+                                                    condiciones o si consideramos que tu conducta puede ser
+                                                    malintencionada.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    El uso de nuestros Servicios no te convierte en titular de ninguno
+                                                    de los derechos de
+                                                    propiedad intelectual de los mismos ni del contenido al que accedas.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    Solo podrás usar el contenido de nuestros Servicios si te autoriza
+                                                    su titular o si está
+                                                    permitido por la ley.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    Estas condiciones no te otorgan el derecho a usar las marcas ni los
+                                                    logotipos utilizados
+                                                    en nuestros Servicios.
+                                                </v-col>
+                                                <v-col sm="9">
+                                                    No elimines, ocultes ni alteres los avisos legales que se muestren
+                                                    en nuestros
+                                                    Servicios.
+                                                </v-col>
+
+                                            </v-row>
+                                        </v-flex>
+                                    </v-container>
+                                </v-content>
+                            </v-dialog>
+                            <v-spacer> </v-spacer>
+                            <span class="white--text">&copy; 2019</span>
+                        </v-footer>
+                    </v-layout>
+                </v-container>
+            </v-card>
+        </v-app>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data: () => ({
+                dialog: false,
+                show: false,
+                fab: false,
+                dialog1: false,
+                name: '',
+                msj: '',
+                return: {
+                    dialog: false,
+                    windowPassword: false
+
+                },
+                valid: false,
+                contras: '',
+                nameRules: [
+                    v => !!v || 'Campo obligatorio',
+                    v => (v && v.length <= 10) || 'Debe tener menos de 10 caracteres',
+                ],
+                email: '',
+                emailRules: [
+                    v => !!v || 'Campo obligatorio',
+                    v => /.+@.+\..+/.test(v) || 'Correo debe ser válido',
+                ],
+                dialog2: false,
+                dialog3: false,
+                drawer: false,
+                group: null,
+                currentItem: 'tab-Web',
+                items: [
+                    { title: 'Inicio', icon: 'dashboard' },
+                    { title: 'Acceso', icon: 'lock' },
+                    { title: 'Contacto', icon: 'contact_mail' },
+                ],
+                play: [
+                    {
+                        color: '#1F7087',
+                        src: 'https://bizcochito.es/Films/Poster/53112.jpg',
+                        title: 'El Cascanueces',
+                        genre: 'Ballet',
+                        resumen: 'Es Navidad. El mago Drosselmeyer lleva un muñeco que representa un cascanueces de regalo para su ahijada María. A medianoche, el muñeco cobra vida y María acaba en medio de una batalla dirigida por el rey de los ratones. Por suerte, el cascanueces está decidido a hacerle frente.',
+                        director: 'Yuri Grigorovich',
+                        cast: 'Compañia del ballet ruso',
+                        duracion: '150 min',
+                        rating: 4,
+                        horario: 'Viernes 31/01/20 - 20:00'
+
+                    },
+                    {
+                        color: '#1F7087',
+                        src: 'https://reportarte.es/wp-content/uploads/2016/09/La-Traviata-Baden-Baden_Spanish_Email-Poster.jpg',
+                        title: 'La Traviata',
+                        genre: 'Ópera',
+                        resumen: 'Violetta Valery, una famosa cortesana, da una espléndida fiesta en su hogar parisino para celebrar su recuperación luego de una enfermedad. Gastón, un conde, ha llevado consigo a su amigo, el joven noble Alfredo Germont, quien anhelaba hacía un año conocer a Violetta.',
+                        director: 'Henrik Nánási',
+                        cast: 'Nadine Sierra, Sandra Ferrández, Michael Fabiano',
+                        duracion: '150 min',
+                        rating: 4.5,
+                        horario: 'Martes 21/01/20 - 19:30'
+                    },
+                    {
+                        color: '#1F7087',
+                        src: 'https://img.europapress.es/fotoweb/fotonoticia_20191220123933_1200.jpg',
+                        title: 'La pequeña cerillera',
+                        genre: 'Obra musical infantil',
+                        resumen: 'Mientras todos compran regalos y manjares, una niña da rienda suelta a su imaginación emprendiendo un viaje en tren que le deparará hilarantes momentos con un torpe revisor y un mágico encuentro con un pasajero, que no es otro que el propio Andersen.',
+                        director: 'Alexis Delgado',
+                        cast: 'Uxía Gonzalvo, Joseba Pinela',
+                        duracion: '90 min',
+                        rating: 3.5,
+                        horario: 'Lunes 30/12/19 - 18:30'
+                    },
+                    {
+                        color: '#1F7087',
+                        src: 'https://img.europapress.es/fotoweb/fotonoticia_20180116150644_1200.jpg',
+                        title: 'Anastasia: El Musical',
+                        genre: 'Obra musical',
+                        resumen: 'Anastasia narra la apasionante aventura de la hija pequeña de los Romanov que, según la leyenda, escapó de la revolución bolchevique y viajó de San Petersburgo hasta París, para encontrar allí su verdadera identidad, y convertirse en la dueña de su destino.',
+                        director: 'Darko Tresnjak',
+                        cast: 'Jana Gómez, Íñigo Etayo, Javier Navares',
+                        duracion: '2 horas y 25 min',
+                        rating: 5,
+                        horario: 'Viernes 31/01/20 - 20:30'
+                    },
+
+                ],
+
+            }),
+
+            methods: {
+                validate() {
+                    if (this.$refs.form.validate()) {
+                        this.snackbar = true
+                    }
+                },
+                onScroll(e) {
+                    if (typeof window === 'undefined') return
+                    const top = window.pageYOffset || e.target.scrollTop || 0
+                    this.fab = top > 20
+                },
+                toTop() {
+                    this.$vuetify.goTo(0)
+                },
+            },
+            created() {
+                this.$vuetify.theme.dark = true
+            },
+            watch: {
+                group() {
+                    this.drawer = false
+                },
+            }
+        })
+    </script>
+
+</body>
+
+</html>

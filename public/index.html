@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="icon.png" />
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <title>Inicio Cines EVAM</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+</head>
+
+<body>
+  <div id="app">
+    <span class="bg"></span>
+    <v-app id="inspire">
+      <v-app-bar color="#6A76AB" fixed dark>
+        <v-toolbar-title>
+          <img
+                   src="./logo.png" onclick="location.href='index.html'">
+        </v-toolbar-title>
+      </v-app-bar>
+      <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm8 md4>
+            <v-card class="elevation-12">
+              <v-toolbar color="#6A76AB">
+                <v-spacer></v-spacer>
+                <v-toolbar-title align-center>Seleccione un evento</v-toolbar-title>
+                <v-spacer></v-spacer>
+              </v-toolbar>
+              <v-container fluid>
+                <v-row>
+                  <v-col cols="6" sm="4">
+                    <v-img src="iconoCine.jpg" width=400px height=300px
+                      onclick="location.href='carteleraNoLogueada.html'">
+                      <div class="fill-height repeating-gradient">Películas</div>
+                    </v-img>
+                    <a href='carteleraNoLogueada.html' style="color: rgb(255, 255, 255)">Cine</a>
+                  </v-col>
+
+                  <v-col cols="6" sm="4">
+                    <v-img src="iconoTeatro.jpg" width=400px height=300px
+                      onclick="location.href='teatroNoLogueada.html'">
+                      <div class="fill-height bottom-gradient">Obras</div>
+                    </v-img>
+                    <a href='teatroNoLogueada.html' style="color: rgb(255, 255, 255)">Teatro</a>
+                  </v-col>
+
+                  <v-col cols="6" sm="4">
+                    <v-img src="iconoConcierto.jpg" width=400px height=300px
+                      onclick="location.href='conciertosNoLogueada.html'">
+                      <div class="fill-height repeating-gradient">Música</div>
+                    </v-img>
+                    <a href='conciertosNoLogueada.html' style="color: rgb(255, 255, 255)">Concierto</a>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-spacer></v-spacer>
+                  <v-col cols="2" sm="4">
+                    <v-btn color="#00BB2D" onclick="location.href='signIn.html'">Registrarse</v-btn>
+                  </v-col>
+                  <v-col cols="2" sm="4">
+                    <v-btn color="#6A76AB" onclick="location.href='logIn.html'">Entrar</v-btn>
+                  </v-col>
+                  <v-spacer></v-spacer>
+                </v-row>
+              </v-container>
+          </v-card>
+        </v-flex>
+        </v-layout>
+      </v-container>
+      <v-footer color="#6A76AB" app>
+        <v-spacer></v-spacer>
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{ on }">
+            <v-btn color="red lighten-2" dark v-on="on">
+              Política de privacidad
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title class="headline grey lighten-2" primary-title>
+              Política de privacidad
+            </v-card-title>
+            <v-card-text>
+              De conformidad con lo dispuesto en la Ley Orgánica 15/1999, de 13 de diciembre, de Protección de Datos
+              de Carácter Personal, Cine EVAM le informa que los datos personales que se recogen serán
+              incorporados a un fichero de datos propiedad de Proyecciones Ideal SCA y serán tratados con una
+              finalidad administrativa y, si procede, remitir información comercial sobre productos o servicios y no
+              habrá ningún otro tipo de tratamiento que no sea para esta finalidad descrita. Los datos incorporados a
+              este fichero serán, exactos y actuales.
+
+              www.evam.es emplea cookies cuando un usuario accede a formularios de pedidos. Estas cookies asocian
+              únicamente un usuario anónimo y su equipo para el proceso de información, sin proporcionar ningún tipo
+              de referencia del que se pueda derivar dato de carácter personal alguno. En caso de que haya una
+              utilización de cookies del que se pueda derivar algún dato de carácter personal, el usuario será
+              informado convenientemente de acuerdo con la Ley Orgánica 15/1999, de 13 de diciembre, de Protección de
+              Datos de Carácter Personal.
+
+              En su caso, si no desea que esos datos sean tratados, puede enviar una correo electrónico a
+              info@cineideal.es señalando tal situación con una copia de su DNI.
+
+              En los supuestos en los que Cine EVAM prevea ceder sus datos personales a terceros, obtendrá previamente
+              el consentimiento inequívoco de los usuarios para efectuar dichas cesiones informándole en los
+              correspondientes formularios electrónicos de inscripción u otro mecanismo análogo o similar de la
+              finalidad o finalidades a que se destinarán los datos objeto de cesión, así como de la identidad y tipo
+              de actividad del cesionario.
+            </v-card-text>
+            <v-divider></v-divider>
+          </v-card>
+        </v-dialog>
+        <v-spacer></v-spacer>
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{ on }">
+            <v-btn color="red lighten-2" dark v-on="on">
+              Condiciones del servicio
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title class="headline grey lighten-2" primary-title>
+              Condiciones del servicio
+            </v-card-title>
+            <v-card-text>
+              Debes seguir las políticas disponibles a través de los Servicios.
+
+              No debes usar nuestros Servicios de forma inadecuada. Por ejemplo, no debes interferir con dichos
+              Servicios ni intentar acceder a ellos usando un método distinto a la interfaz y a las instrucciones
+              proporcionadas por Google. Solo podrás usar los Servicios en la medida en que la ley lo permita,
+              incluidas las leyes y las normativas de control de las exportaciones y de las reexportaciones que estén
+              en vigor. Podemos suspender o cancelar nuestros Servicios si no cumples con nuestras políticas o
+              condiciones o si consideramos que tu conducta puede ser malintencionada.
+
+              El uso de nuestros Servicios no te convierte en titular de ninguno de los derechos de propiedad
+              intelectual de los mismos ni del contenido al que accedas. Solo podrás usar el contenido de nuestros
+              Servicios si te autoriza su titular o si está permitido por la ley. Estas condiciones no te otorgan el
+              derecho a usar las marcas ni los logotipos utilizados en nuestros Servicios. No elimines, ocultes ni
+              alteres los avisos legales que se muestren en nuestros Servicios.
+            </v-card-text>
+            <v-divider></v-divider>
+          </v-card>
+        </v-dialog>
+        <v-spacer></v-spacer>
+        <span class="white--text">&copy; 2019</span>
+      </v-footer>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+  <script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      props: {
+        source: String,
+      },
+      data: () => ({
+        drawer: null,
+        return: {
+          dialog: false,
+        }
+      }),
+      created() {
+        this.$vuetify.theme.dark = true
+      },
+    })
+  </script>
+
+</body>
+
+</html>

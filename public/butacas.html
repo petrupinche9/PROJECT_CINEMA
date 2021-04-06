@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+
+<head>
+    <style>
+        .clickable {
+            cursor: pointer;
+        }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="icon.png" />
+    <title>CINES EVAM LEON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+<div id="app" flex>
+    <v-app id="vapp">
+        <v-card class="seccion">
+            <v-app-bar color="#6A76AB" dark>
+                <v-spacer>
+                    <img
+                            src="./logo.png" onclick="location.href='index.html'">
+                </v-spacer>
+                <h2>PATIO DE BUTACAS</h2>
+
+                <v-spacer></v-spacer>
+                <!--
+                <v-text-field class="mx-3" flat label="Search" prepend-inner-icon="search" solo-inverted>
+                </v-text-field>
+
+                <input type="text" v-model="search" placeholder="Search title.." />
+-->
+                <v-btn icon onclick="location.href='index.html'">
+                    <v-icon>mdi-magnify</v-icon>
+                </v-btn>
+                <v-btn icon onclick="location.href='cesta.html'">
+                    <v-icon dark>mdi-cart</v-icon>
+                </v-btn>
+                <v-btn icon onclick="location.href='login.html'">
+                    <v-icon dark>mdi-account-circle</v-icon>
+                </v-btn>
+                <v-menu bottom left>
+                    <template v-slot:activator="{ on }">
+                        <v-btn icon v-on="on">
+                            <v-icon>mdi-dots-vertical</v-icon>
+                        </v-btn>
+                    </template>
+
+                    <v-list>
+                        <v-list-item v-for="(item, i) in items" :key="i">
+                            <v-list-item-title>{{ item.title }}&nbsp;</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+
+                </v-menu>
+            </v-app-bar>
+
+            <v-container>
+                <v-row >
+                    <div class="text-left">
+                        <v-sheet>SELECCIONE LAS BUTACAS</v-sheet>
+                    </div>
+                    </v-col>
+                </v-row>
+
+                <v-layout align-center justify-center  >
+                    <v-row>
+                        <v-col v-for="n in 7">
+                            <v-chip class="ma-2" color="primary"> {{n}} </v-chip>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col v-for="(item, i) in butacas" :key="i"  >
+                            <v-card max-width="50%" class="515151 mx-auto clickable "  raised  >
+                                <v-img id="callo" :src="item.src"  max-width="100" v-on:click="item.src=change(item.src)" ></v-img>
+                            </v-card>
+                            <!--item.src='https://iconsplace.com/wp-content/uploads/_icons/e51401/256/png/sofa-icon-4-256.png'"-->
+                           </v-col>
+                       </v-row>
+                    <v-row>
+                        <v-col v-for="n in 7">
+                            <v-chip class="ma-2" color="primary">{{n}}</v-chip>
+                        </v-col>
+                    </v-row>
+                    <v-spacer></v-spacer>
+
+                   </v-layout>
+
+            </v-container>
+               </v-container>
+           </v-card>
+
+        <v-container>
+        <v-layout align-center justify-center>
+            <v-col>
+
+                <div class="green">
+                    <span class="white--text">BUTACAS LIBRES</span>
+                </div></v-col><v-col>
+                <div class="red">
+                    <span class="white--text">BUTACAS OCUPADAS</span>
+                </div>
+
+            </v-col>
+            <v-spacer></v-spacer>
+                <v-col><v-btn v-bind:disabled="btnDisable" class="align-center justify-center " onclick="location.href='cesta.html'">
+                ANADIR A LA CESTA
+            </v-btn>
+                </v-col>
+            </v-row>
+        </v-layout>
+        </v-container>
+       </v-app>
+   </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+   </body>
+   </html>
+
+   <script>
+     vue = new Vue({
+         el: '#app',
+         vuetify: new Vuetify(),
+
+         data: () => ({
+             link: 'https://iconsplace.com/wp-content/uploads/_icons/cccccc/256/png/sofa-icon-4-256.png',
+             disabled: true,
+             dialogm1: '',
+             dialog: false,
+             show: false,
+             fab: false,
+             seccion: '',
+             drawer: false,
+             group: null,
+             currentItem: 'tab-Web',
+             btnDisable: true,
+             items: [
+                 {title: 'Inicio', icon: 'dashboard'},
+                 {title: 'Acceso', icon: 'lock'},
+                 {title: 'Contacto', icon: 'contact_mail'},
+             ],
+             butacas: [{
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/e51401/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/e51401/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/e51401/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/e51401/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/e51401/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/e51401/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             }, {
+
+                 src: 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+             },
+             ],
+
+             return: {
+                 disabled: false
+             }
+         }),
+         created() {
+             this.$vuetify.theme.dark = true
+         },
+         watch: {
+             group() {
+                 this.drawer = false
+             },
+
+         },
+         methods: {
+
+             change(comp) {
+
+                 //let img=this.butacas.includes('https://iconsplace.com/wp-content/uploads/_icons/cccccc/256/png/sofa-icon-4-256.png')
+
+                  var butaca=this.butacas
+
+                 let exists = this.butacas.some(function(butaca) {
+                     return butaca.src === 'https://iconsplace.com/wp-content/uploads/_icons/cccccc/256/png/sofa-icon-4-256.png'
+                 });
+
+                 if (comp === 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png') {
+                     comp = 'https://iconsplace.com/wp-content/uploads/_icons/cccccc/256/png/sofa-icon-4-256.png'
+                     this.btnDisable = false;
+                     return comp
+                 } else if (comp === 'https://iconsplace.com/wp-content/uploads/_icons/cccccc/256/png/sofa-icon-4-256.png') {
+
+                     return 'https://iconsplace.com/wp-content/uploads/_icons/1aff2d/256/png/sofa-icon-4-256.png'
+
+                 } else if(comp === 'https://iconsplace.com/wp-content/uploads/_icons/e51401/256/png/sofa-icon-4-256.png')
+                 {
+                     alert("BUTACA OCUPADA")
+                     return 'https://iconsplace.com/wp-content/uploads/_icons/e51401/256/png/sofa-icon-4-256.png'
+                 }else(comp === 'https://iconsplace.com/wp-content/uploads/_icons/cccccc/256/png/sofa-icon-4-256.png' && exists);
+                 {
+                     this.btnDisable = true;
+                 }
+
+
+
+                /* for(var i=0;i<this.butacas.length;i++){
+                     this.btnDisable = this.butacas[i].src !== this.link;
+                 }*/
+             },
+
+
+
+         },
+         }
+       )
+   </script>
